@@ -1,15 +1,13 @@
 package com.miartg.draw
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-
-import com.miartg.draw.shapes.Rectangle
-import com.miartg.draw.shapes.Shape
+import com.miartg.draw.editors.Editor
+import com.miartg.draw.shapes.Point
 
 class DrawView @JvmOverloads constructor(
     context: Context,
@@ -18,77 +16,31 @@ class DrawView @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
-    private var paint = Paint().apply {
-        color = Color.RED
-        strokeWidth = 3f
-        style = Paint.Style.STROKE
-    }
+    var mode: Mode
+        get() = editor.mode
+        set(value) {
+            editor.mode = value
+        }
 
-    private var shapes = listOf(
-        Rectangle(200f, 100f, 500f, 200f),
-        Rectangle(550f, 250f, 700f, 100f),
-        Rectangle(100f, 550f, 300f, 800f)
-    )
-
-    private var movingShape: Shape? = null
-
-    private var downX = 0f
-    private var downY = 0f
-
+    private val editor = Editor()
+    private val drawer = Drawer()
+    private val touchEventPoint = Point()
 
     override fun onDraw(canvas: Canvas) {
-        for (shape in shapes) {
-            shape.draw(canvas, paint)
-        }
+       drawer.draw(canvas, editor.drawables)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-
-        val x = event.x
-        val y = event.y
-
+        touchEventPoint.set(event.x , event.y)
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                downX = x
-                downY = y
-                onDown(x, y)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                onMove(x, y)
-            }
-
-
-            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
-                onUp()
-            }
+            MotionEvent.ACTION_DOWN -> editor.onDown(touchEventPoint)
+            MotionEvent.ACTION_MOVE -> editor.onMove(touchEventPoint)
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> editor.onUp()
         }
-
-
+        invalidate()
         return true
-    }
-
-    private fun onDown(x: Float, y: Float) {
-        for (shape in shapes) {
-            if (shape.isBelong(x, y)) {
-                movingShape = shape
-                return
-            }
-        }
-        movingShape = null
-    }
-
-
-    private fun onMove(x: Float, y: Float) {
-        movingShape?.onMove(x - downX, y - downY)
-        invalidate()
-    }
-
-
-    private fun onUp(){
-        movingShape?.onUp()
-        invalidate()
     }
 
 }

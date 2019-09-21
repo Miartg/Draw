@@ -1,28 +1,25 @@
 package com.miartg.draw.shapes
 
-import android.graphics.Canvas
-import android.graphics.Paint
-
-class Line(
-    private val startX: Float,
-    private val startY: Float,
-    private val stopX: Float,
-    private val stopY: Float
+data class Line(
+    var start: Point,
+    var stop: Point
 ) : Shape {
 
-    override fun draw(canvas: Canvas, paint: Paint) {
-        canvas.drawLine(startX, startY, stopX, stopY, paint)
+    constructor(startX: Float = 0f, startY: Float = 0f, stopX: Float = 0f, stopY: Float = 0f) :
+            this(Point(startX, startY), Point(stopX, stopY))
+
+    override fun contains(point: Point, precision: Float): Boolean =
+        false
+
+    override fun start(point: Point) {
+        start.set(point)
     }
 
-    override fun isBelong(x: Float, y: Float): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun stop(point: Point) {
+        stop.set(point)
     }
 
-    override fun onMove(dx: Float, dy: Float) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onUp() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun complete() {
+        //no need complete
     }
 }

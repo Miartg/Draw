@@ -1,11 +1,32 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!--Themes-->
+    <style name="Theme.Draw" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primaryDark</item>
+        <item name="colorAccent">@color/color_accent</item>
     </style>
+
+    <style name="Theme.Draw.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Draw.Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorAccent">@color/color_toolbar_accent</item>
+    </style>
+
+    <style name="Theme.Draw.Toolbar.Popup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/color_accent</item>
+    </style>
+
+    <!--Styles-->
+    <style name="Draw.Base.Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/color_primary</item>
+        <item name="android:theme">@style/Theme.Draw.Toolbar</item>
+        <item name="popupTheme">@style/Theme.Draw.Toolbar.Popup</item>
+    </style>
+
+    <style name="Draw.Toolbar" parent="Draw.Base.Toolbar" />
 
 </resources>
