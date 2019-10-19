@@ -1,9 +1,9 @@
 package com.miartg.draw
 
-import com.miartg.draw.shapes.Point
+import com.miartg.draw.geometry.Point
 
 interface Touch {
     fun onDown(point: Point)
     fun onMove(point: Point)
-    fun onUp()
+    fun onUp(point: Point)
 }

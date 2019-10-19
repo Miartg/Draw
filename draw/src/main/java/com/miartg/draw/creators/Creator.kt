@@ -4,11 +4,9 @@ import com.miartg.draw.Touch
 import com.miartg.draw.drawables.Drawable
 import com.miartg.draw.drawables.DrawablesFactory
 import com.miartg.draw.editors.Editor
-import com.miartg.draw.shapes.Point
+import com.miartg.draw.geometry.Point
 
-class Creator(
-    private val editor: Editor
-) : Touch {
+class Creator(private val editor: Editor) : Touch {
 
     private var drawable: Drawable? = null
 
@@ -21,9 +19,9 @@ class Creator(
 
     override fun onMove(point: Point) {
         end.set(point)
-        if (drawable == null && !start.isNear(end, TOLERANCE)) {
-            drawable = DrawablesFactory
-                .createDrawable(editor.mode, editor.style).apply {
+        if (drawable == null && !start.isNear(end, DrawablesFactory.getTolerance(editor.mode))) {
+            drawable = DrawablesFactory.createDrawable(editor.mode, editor.style)
+                .apply {
                     start(start)
                     stop(end)
                     editor.drawables.add(this)
@@ -34,11 +32,14 @@ class Creator(
 
     }
 
-    override fun onUp() {
+    override fun onUp(point: Point) {
+        if (drawable == null && DrawablesFactory.getTolerance(editor.mode) <= 0f) {
+            drawable = DrawablesFactory.createDrawable(editor.mode, editor.style).apply {
+                editor.drawables.add(this)
+            }
+        }
+        drawable?.complete(point)
         drawable = null
     }
 
-    companion object {
-        const val TOLERANCE = 4f
-    }
 }

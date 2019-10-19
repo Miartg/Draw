@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.miartg.draw.editors.Editor
-import com.miartg.draw.shapes.Point
+import com.miartg.draw.geometry.Point
 
 class DrawView @JvmOverloads constructor(
     context: Context,
@@ -28,6 +28,7 @@ class DrawView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
        drawer.draw(canvas, editor.drawables)
+        drawer.drawSelection(canvas, editor.selectedDrawable)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -37,7 +38,7 @@ class DrawView @JvmOverloads constructor(
         when (event.action) {
             MotionEvent.ACTION_DOWN -> editor.onDown(touchEventPoint)
             MotionEvent.ACTION_MOVE -> editor.onMove(touchEventPoint)
-            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> editor.onUp()
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> editor.onUp(touchEventPoint)
         }
         invalidate()
         return true

@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Draw</string>
-    <string name="line">Line</string>
-    <string name="circle">Circle</string>
-    <string name="rectangle">Rectangle</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pencil">Pencil</string>
+    <string name="line">Line</string>
+    <string name="rectangle">Rectangle</string>
     <string name="oval">Oval</string>
 </resources>
