@@ -22,14 +22,13 @@ class Creator(private val editor: Editor) : Touch {
         if (drawable == null && !start.isNear(end, DrawablesFactory.getTolerance(editor.mode))) {
             drawable = DrawablesFactory.createDrawable(editor.mode, editor.style)
                 .apply {
-                    start(start)
-                    stop(end)
+                    createBegin(start)
+                    createUpdate(end)
                     editor.drawables.add(this)
                 }
         } else {
-            drawable?.stop(end)
+            drawable?.createUpdate(end)
         }
-
     }
 
     override fun onUp(point: Point) {
@@ -38,8 +37,7 @@ class Creator(private val editor: Editor) : Touch {
                 editor.drawables.add(this)
             }
         }
-        drawable?.complete(point)
+        drawable?.createEnd(point)
         drawable = null
     }
-
 }

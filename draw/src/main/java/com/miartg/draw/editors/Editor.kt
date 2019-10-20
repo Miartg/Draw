@@ -7,6 +7,7 @@ import com.miartg.draw.creators.Creator
 import com.miartg.draw.drawables.Drawable
 import com.miartg.draw.ext.dp
 import com.miartg.draw.geometry.Point
+import com.miartg.draw.geometry.Vector
 import com.miartg.draw.styles.Cap
 import com.miartg.draw.styles.DrawStyles
 import com.miartg.draw.styles.Stroke
@@ -25,30 +26,19 @@ class Editor : Touch {
     private val creator = Creator(this)
     private val precision: Float = 24f.dp
 
+    private val downPoint = Point()
+    private val deltaVector = Vector()
+
     override fun onDown(point: Point) {
-        //ищем фигуру
         selectedDrawable = drawables.findLast { it.strokeContains(point, precision) }
-        //если не нашли, передаем управление создателю
-        if (selectedDrawable == null) {
-            creator.onDown(point)
-        } else {
-            //todo edit
-        }
+        selectedDrawable?.editBegin(downPoint.set(point)) ?: creator.onDown(point)
     }
 
     override fun onMove(point: Point) {
-        if (selectedDrawable == null) {
-            creator.onMove(point)
-        } else {
-            //todo edit
-        }
+        selectedDrawable?.editUpdate(deltaVector.set(downPoint, point)) ?: creator.onMove(point)
     }
 
     override fun onUp(point: Point) {
-        if (selectedDrawable == null) {
-            creator.onUp(point)
-        } else {
-            //todo edit
-        }
+        selectedDrawable?.editEnd(point) ?: creator.onUp(point)
     }
 }

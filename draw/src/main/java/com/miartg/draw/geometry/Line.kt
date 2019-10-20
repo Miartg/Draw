@@ -8,18 +8,32 @@ data class Line(
     constructor(startX: Float = 0f, startY: Float = 0f, stopX: Float = 0f, stopY: Float = 0f) :
             this(Point(startX, startY), Point(stopX, stopY))
 
-    override fun strokeContains(point: Point, precision: Float): Boolean =
-        distToPoint(point) <= precision
+    fun set(line: Line): Line {
+        start.set(line.start)
+        stop.set(line.stop)
+        return this
+    }
 
+    fun set(startX: Float, startY: Float, stopX: Float, stopY: Float): Line {
+        start.set(startX, startY)
+        stop.set(stopX, stopY)
+        return this
+    }
 
     fun distToPoint(point: Point) = distToPoint(this, point)
 
+    override fun strokeContains(point: Point, precision: Float): Boolean =
+        distToPoint(point) <= precision
+
     companion object {
+        private var tmp1 = Vector(0f, 0f)
+        private var tmp2 = Vector(0f, 0f)
+
         fun distToPoint(s: Line, p: Point): Float {
             //v - вектор start -> stop
-            val v = Vector.tmp1.set(s.start, s.stop)
+            val v = tmp1.set(s.start, s.stop)
             //w - вектор start -> p
-            val w = Vector.tmp2.set(s.start, p)
+            val w = tmp2.set(s.start, p)
             val dotWV = w.dot(v)
             //угол туопй -> точка ближе к началу
             if (dotWV <= 0) {

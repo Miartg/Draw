@@ -1,8 +1,8 @@
 package com.miartg.draw.geometry
 
-class Vector(
-    var x: Float,
-    var y: Float
+data class Vector(
+    var x: Float = 0f,
+    var y: Float = 0f
 ) {
 
     fun set(x: Float, y: Float): Vector {
@@ -17,11 +17,20 @@ class Vector(
         return this
     }
 
+    fun set(vector: Vector): Vector {
+        x = vector.x
+        y = vector.y
+        return this
+    }
+
+    operator fun plusAssign(vector: Vector) {
+        x += vector.x
+        y += vector.y
+    }
+
     fun dot(v: Vector) = v.x * x + v.y * y
 
     companion object {
-        var tmp1 = Vector(0f, 0f)
-        var tmp2 = Vector(0f, 0f)
         fun dot(x1: Float, y1: Float, x2: Float, y2: Float) = x1 * x2 + y1 * y2
     }
 }

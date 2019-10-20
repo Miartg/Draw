@@ -3,10 +3,11 @@ package com.miartg.draw.drawables
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.miartg.draw.creators.Creatable
+import com.miartg.draw.editors.Editable
 import com.miartg.draw.geometry.Point
 import com.miartg.draw.styles.Style
 
-abstract class Drawable(vararg style: Style?) : Creatable {
+abstract class Drawable(vararg style: Style?) : Creatable, Editable {
 
     private val styles: List<Style> = style.filterNotNull()
 

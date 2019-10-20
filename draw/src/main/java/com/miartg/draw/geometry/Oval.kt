@@ -1,21 +1,6 @@
 package com.miartg.draw.geometry
 
-
-data class Oval(
-    val bounds: Rect
-) : Shape {
-
-    val centerX
-        get() = bounds.centerX
-
-    val centerY
-        get() = bounds.centerY
-
-    val width
-        get() = bounds.width
-
-    val height
-        get() = bounds.height
+data class Oval(val bounds: Rect) : Shape {
 
     constructor(
         left: Float = 0f,
@@ -24,11 +9,16 @@ data class Oval(
         bottom: Float = 0f
     ) : this(Rect(left, top, right, bottom))
 
+    fun set(oval: Oval): Oval {
+        bounds.set(oval.bounds)
+        return this
+    }
+
     override fun strokeContains(point: Point, precision: Float): Boolean {
-        var w = width
-        var h = height
+        var w = bounds.width
+        var h = bounds.height
         //vector center -> point
-        val v = Vector.tmp1.set(point.x - centerX, point.y - centerY)
+        val v = tmp1.set(point.x - bounds.centerX, point.y - bounds.centerY)
         //смотрим на элипс большего на precision размера
         w += 2f * precision
         h += 2f * precision
@@ -43,8 +33,8 @@ data class Oval(
         }
     }
 
-
     companion object {
+        private var tmp1 = Vector(0f, 0f)
 
         /**
          * @return when {
