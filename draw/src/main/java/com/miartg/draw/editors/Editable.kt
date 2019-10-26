@@ -5,7 +5,7 @@ import com.miartg.draw.geometry.Vector
 
 interface Editable {
 
-    fun editBegin(point: Point)
-    fun editUpdate(delta: Vector)
-    fun editEnd(point: Point)
+    fun onEditBegin(point: Point)
+    fun onEdit(delta: Vector)
+    fun onEditEnd(point: Point)
 }

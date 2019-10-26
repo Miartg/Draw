@@ -19,17 +19,17 @@ class RectDrawable(override val shape: Rect, stroke: Stroke?, solid: Solid?) :
         shape.run { canvas.drawRect(left, top, right, bottom, paint) }
     }
 
-    override fun createBegin(point: Point) {
+    override fun onCreateBegin(point: Point) {
         shape.left = point.x
         shape.top = point.y
     }
 
-    override fun createUpdate(point: Point) {
+    override fun onCreate(point: Point) {
         shape.right = point.x
         shape.bottom = point.y
     }
 
-    override fun createEnd(point: Point) {
+    override fun onCreateEnd(point: Point) {
         shape.sort()
     }
 
@@ -39,11 +39,11 @@ class RectDrawable(override val shape: Rect, stroke: Stroke?, solid: Solid?) :
     //----
 
 
-    override fun editBegin(point: Point) {
+    override fun onEditBegin(point: Point) {
         snapshot.set(shape)
     }
 
-    override fun editUpdate(delta: Vector) {
+    override fun onEdit(delta: Vector) {
         shape.set(
             snapshot.left + delta.x,
             snapshot.top + delta.y,
@@ -52,7 +52,7 @@ class RectDrawable(override val shape: Rect, stroke: Stroke?, solid: Solid?) :
         )
     }
 
-    override fun editEnd(point: Point) {
+    override fun onEditEnd(point: Point) {
 
     }
 

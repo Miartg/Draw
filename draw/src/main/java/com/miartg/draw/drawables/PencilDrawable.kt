@@ -27,12 +27,12 @@ class PencilDrawable(stroke: Stroke?) : Drawable(stroke) {
     //Create
     //------
 
-    override fun createBegin(point: Point) {
+    override fun onCreateBegin(point: Point) {
         path.moveTo(point.x, point.y)
         lastPoint.set(point)
     }
 
-    override fun createUpdate(point: Point) {
+    override fun onCreate(point: Point) {
         if (abs(point.x - lastPoint.x) >= TOUCH_TOLERANCE || abs(point.y - lastPoint.y) >= TOUCH_TOLERANCE) {
             path.quadTo(
                 lastPoint.x,
@@ -44,7 +44,7 @@ class PencilDrawable(stroke: Stroke?) : Drawable(stroke) {
         }
     }
 
-    override fun createEnd(point: Point) {
+    override fun onCreateEnd(point: Point) {
         if (path.isEmpty) {
             path.addCircle(point.x, point.y, 1f, Path.Direction.CW)
         }
@@ -56,17 +56,17 @@ class PencilDrawable(stroke: Stroke?) : Drawable(stroke) {
     //Edit
     //----
 
-    override fun editBegin(point: Point) {
+    override fun onEditBegin(point: Point) {
         lastDelta.set(0f, 0f)
     }
 
-    override fun editUpdate(delta: Vector) {
+    override fun onEdit(delta: Vector) {
         matrix.setTranslate(delta.x - lastDelta.x, delta.y - lastDelta.y)
         path.transform(matrix)
         lastDelta.set(delta)
     }
 
-    override fun editEnd(point: Point) {
+    override fun onEditEnd(point: Point) {
         translateVector += lastDelta
     }
 

@@ -22,15 +22,15 @@ class LineDrawable(override val shape: Line, stroke: Stroke?) : ShapeDrawable(sh
     //Create
     //------
 
-    override fun createBegin(point: Point) {
+    override fun onCreateBegin(point: Point) {
         shape.start.set(point)
     }
 
-    override fun createUpdate(point: Point) {
+    override fun onCreate(point: Point) {
         shape.stop.set(point)
     }
 
-    override fun createEnd(point: Point) {
+    override fun onCreateEnd(point: Point) {
         //no need complete
     }
 
@@ -39,11 +39,11 @@ class LineDrawable(override val shape: Line, stroke: Stroke?) : ShapeDrawable(sh
     //Edit
     //----
 
-    override fun editBegin(point: Point) {
+    override fun onEditBegin(point: Point) {
         snapshot.set(shape)
     }
 
-    override fun editUpdate(delta: Vector) {
+    override fun onEdit(delta: Vector) {
         shape.set(
             snapshot.start.x + delta.x,
             snapshot.start.y + delta.y,
@@ -52,7 +52,7 @@ class LineDrawable(override val shape: Line, stroke: Stroke?) : ShapeDrawable(sh
         )
     }
 
-    override fun editEnd(point: Point) {
+    override fun onEditEnd(point: Point) {
 
     }
 

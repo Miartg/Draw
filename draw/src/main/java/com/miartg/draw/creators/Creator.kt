@@ -22,12 +22,12 @@ class Creator(private val editor: Editor) : Touch {
         if (drawable == null && !start.isNear(end, DrawablesFactory.getTolerance(editor.mode))) {
             drawable = DrawablesFactory.createDrawable(editor.mode, editor.style)
                 .apply {
-                    createBegin(start)
-                    createUpdate(end)
+                    onCreateBegin(start)
+                    onCreate(end)
                     editor.drawables.add(this)
                 }
         } else {
-            drawable?.createUpdate(end)
+            drawable?.onCreate(end)
         }
     }
 
@@ -37,7 +37,7 @@ class Creator(private val editor: Editor) : Touch {
                 editor.drawables.add(this)
             }
         }
-        drawable?.createEnd(point)
+        drawable?.onCreateEnd(point)
         drawable = null
     }
 }

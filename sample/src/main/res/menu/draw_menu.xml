@@ -17,4 +17,8 @@
         android:id="@+id/rectangle"
         android:title="@string/rectangle" />
 
+    <item
+        android:id="@+id/remove"
+        android:title="@string/remove" />
+
 </menu>

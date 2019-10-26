@@ -24,21 +24,26 @@ class Editor : Touch {
     var selectedDrawable: Drawable? = null
 
     private val creator = Creator(this)
-    private val precision: Float = 24f.dp
+    private val precision: Float = 5f.dp
 
     private val downPoint = Point()
     private val deltaVector = Vector()
 
+    fun removeSelected() {
+        selectedDrawable?.let(drawables::remove)
+        selectedDrawable = null
+    }
+
     override fun onDown(point: Point) {
         selectedDrawable = drawables.findLast { it.strokeContains(point, precision) }
-        selectedDrawable?.editBegin(downPoint.set(point)) ?: creator.onDown(point)
+        selectedDrawable?.onEditBegin(downPoint.set(point)) ?: creator.onDown(point)
     }
 
     override fun onMove(point: Point) {
-        selectedDrawable?.editUpdate(deltaVector.set(downPoint, point)) ?: creator.onMove(point)
+        selectedDrawable?.onEdit(deltaVector.set(downPoint, point)) ?: creator.onMove(point)
     }
 
     override fun onUp(point: Point) {
-        selectedDrawable?.editEnd(point) ?: creator.onUp(point)
+        selectedDrawable?.onEditEnd(point) ?: creator.onUp(point)
     }
 }

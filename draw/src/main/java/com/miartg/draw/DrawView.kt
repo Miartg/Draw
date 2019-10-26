@@ -44,4 +44,9 @@ class DrawView @JvmOverloads constructor(
         return true
     }
 
+    fun removeSelected() {
+        editor.removeSelected()
+        invalidate()
+    }
+
 }

@@ -14,9 +14,13 @@ class DrawFragment : Fragment(R.layout.draw_fragment) {
                 R.id.pencil -> Mode.PENCIL
                 R.id.oval -> Mode.OVAL
                 R.id.rectangle -> Mode.RECT
-                else -> throw IllegalStateException("Unsupported Mode")
+                else -> draw_view.mode
             }
-            toolbar.title = item.title
+            if (item.itemId == R.id.remove) {
+                draw_view.removeSelected()
+            } else {
+                toolbar.title = item.title
+            }
             true
         }
     }

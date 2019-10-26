@@ -25,17 +25,17 @@ class OvalDrawable(override val shape: Oval, stroke: Stroke?, solid: Solid?) :
     //Create
     //------
 
-    override fun createBegin(point: Point) {
+    override fun onCreateBegin(point: Point) {
         shape.bounds.left = point.x
         shape.bounds.top = point.y
     }
 
-    override fun createUpdate(point: Point) {
+    override fun onCreate(point: Point) {
         shape.bounds.right = point.x
         shape.bounds.bottom = point.y
     }
 
-    override fun createEnd(point: Point) {
+    override fun onCreateEnd(point: Point) {
         shape.bounds.sort()
     }
 
@@ -44,11 +44,11 @@ class OvalDrawable(override val shape: Oval, stroke: Stroke?, solid: Solid?) :
     //Edit
     //----
 
-    override fun editBegin(point: Point) {
+    override fun onEditBegin(point: Point) {
         snapshot.set(shape)
     }
 
-    override fun editUpdate(delta: Vector) {
+    override fun onEdit(delta: Vector) {
         shape.bounds.set(
             snapshot.bounds.left + delta.x,
             snapshot.bounds.top + delta.y,
@@ -57,7 +57,7 @@ class OvalDrawable(override val shape: Oval, stroke: Stroke?, solid: Solid?) :
         )
     }
 
-    override fun editEnd(point: Point) {
+    override fun onEditEnd(point: Point) {
 
     }
 
